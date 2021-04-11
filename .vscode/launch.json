@@ -20,7 +20,13 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                // these are also configured in Properties/launchSettings.json for non vscode setups
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DB_SERVER": "localhost",
+                "DB_NAME": "product-db",
+                "DB_PORT": "3306",
+                "DB_USER": "root",
+                "DB_PASSWORD": "myPass"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"

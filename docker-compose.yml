@@ -4,6 +4,12 @@ services:
   db:
     build: ./Db
   app:
+    environment:
+      DB_SERVER: db
+      DB_NAME: product-db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: myPass
     build:
       context: .
       dockerfile: Aspnetcoreapp/Dockerfile

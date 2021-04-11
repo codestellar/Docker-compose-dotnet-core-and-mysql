@@ -8,7 +8,12 @@ namespace aspnetcoreapp.Controllers
     [Route("")]
     public class ProductsController : ControllerBase
     {
-        private readonly ProductsProvider _provider = new ProductsProvider();
+        private readonly IProductsProvider _provider;
+
+        public ProductsController(IProductsProvider provider)
+        {
+            _provider = provider;
+        }        
 
         [HttpGet]
         public ActionResult<IEnumerable<Product>> Get()

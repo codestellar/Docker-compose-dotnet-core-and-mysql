@@ -19,7 +19,6 @@ namespace ProductLibrary {
 
         public Product[] GetAll()
         {
-            _logger.LogWarning(_dbConfig.ConnectionString);
             using (var connection = new MySqlConnection (_dbConfig.ConnectionString))
             {
                 return connection.Query<Product> (QUERY).ToArray ();

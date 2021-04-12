@@ -38,3 +38,6 @@ If you want to see if this example system works properly, just access in your br
 ```
 
 If you see empty result, wait a while and try again - maybe MySQL database is not fully initialized yet.
+
+## Local development from host machine
+To develop the application locally on your host machine but run all the supporting services via containers, run `.script/bootstrap`. This will run _docker-compose up -d db_ to start the database in detached mode. The docker-compose.yml is configured to map `localhost:3001` to `db:3306` which your IDE launch config can use to connect to the datbase (`.vscode/launch.json` is pre-configured for this).

@@ -19,9 +19,9 @@ namespace ProductLibrary {
 
         public Product[] GetAll()
         {
-            using (var connection = new MySqlConnection (_dbConfig.ConnectionString))
+            using (var connection = new MySqlConnection(_dbConfig.ConnectionString))
             {
-                return connection.Query<Product> (QUERY).ToArray ();
+                return connection.Query<Product>(QUERY).ToArray();
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Dapper;
-using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using ProductLibrary.Config;
 
@@ -9,12 +8,10 @@ namespace ProductLibrary
     public class ProductsProvider : IProductsProvider
     {
         private readonly DbConfig _dbConfig;
-        private readonly ILogger<ProductsProvider> _logger;
 
-        public ProductsProvider(DbConfig dbConfig, ILogger<ProductsProvider> logger) 
+        public ProductsProvider(DbConfig dbConfig) 
         {
             _dbConfig = dbConfig;
-            _logger = logger;
         }
 
         private const string QUERY = "SELECT Id, Name, Description FROM product";

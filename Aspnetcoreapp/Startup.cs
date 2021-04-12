@@ -35,13 +35,13 @@ namespace aspnetcoreapp
         {
             string server = Environment.GetEnvironmentVariable("DB_SERVER") ?? "localhost";
             string dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "product-db";
-            string port = Environment.GetEnvironmentVariable("DB_PORT") ?? "3306";
+            string port = Environment.GetEnvironmentVariable("DB_PORT") ?? "3001";
             string user = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
             string password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "myPass";
 
             return new DbConfig
             {
-                ConnectionString = $"Server=db;Port={port};Database={dbName};Uid={user}; Pwd={password};"
+                ConnectionString = $"Server={server};Port={port};Database={dbName};Uid={user}; Pwd={password};"
             };
         }
     }

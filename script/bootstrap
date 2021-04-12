@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#/ Usage: script/bootstrap [--force] [--reset]
+#/ Installs dependencies required to build and run the project.
+#/  --force
+#/      forces the db container to restart, even if it's running
+#/  --reset
+#/      recreates the database even if it already exists, dumping all existing data
+root="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd )"
+cd "$root"
+
+set -eu
+
+echo "Bootstrapping..."
+
+force=false
+reset=false
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --force)
+      force=true
+      shift ;;
+    --reset)
+      reset=true
+      shift ;;
+    *)
+      cat "$0" | grep ^#/ | cut -c4-
+      exit 1 ;;
+  esac
+done
+
+if $reset && ! $force; then
+  echo "Cannot reset unless '--force' is also specified." 1>&2
+  exit 1
+fi
+
+if $force; then
+  docker-compose down -v || true
+fi
+
+if $reset; then
+  echo "Deleting volume db_data"
+  docker volume rm -f db_data >/dev/null
+fi
+
+echo "Running docker-compose build"
+docker-compose build
+
+echo "Starting support services"
+docker-compose up -d db
+
+echo "Polling database for connectivity..."
+script/wait-for-db
+
+echo "Finished bootstrap"

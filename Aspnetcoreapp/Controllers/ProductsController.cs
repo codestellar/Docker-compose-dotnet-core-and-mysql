@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ProductLibrary;
 
 namespace aspnetcoreapp.Controllers
@@ -9,9 +10,11 @@ namespace aspnetcoreapp.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsProvider _provider;
+        private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(IProductsProvider provider)
+        public ProductsController(ILogger<ProductsController> logger, IProductsProvider provider)
         {
+            _logger = logger;
             _provider = provider;
         }        
 
@@ -24,7 +27,7 @@ namespace aspnetcoreapp.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception during providing products, maybe DB is not fully initialized yet? " +
+                _logger.LogWarning("Exception during providing products, maybe DB is not fully initialized yet? " +
                                   $"Try again in a few minutes and if it doesn't help, check your docker-compose configuration.\n{e}");
                 
                 return new Product[0];

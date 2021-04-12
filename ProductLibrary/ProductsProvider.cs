@@ -4,12 +4,14 @@ using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using ProductLibrary.Config;
 
-namespace ProductLibrary {
-    public class ProductsProvider : IProductsProvider {
+namespace ProductLibrary
+{
+    public class ProductsProvider : IProductsProvider
+    {
         private readonly DbConfig _dbConfig;
         private readonly ILogger<ProductsProvider> _logger;
 
-        public ProductsProvider (DbConfig dbConfig, ILogger<ProductsProvider> logger) 
+        public ProductsProvider(DbConfig dbConfig, ILogger<ProductsProvider> logger) 
         {
             _dbConfig = dbConfig;
             _logger = logger;

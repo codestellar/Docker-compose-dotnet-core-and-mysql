@@ -1,6 +1,8 @@
-CREATE DATABASE `product-db` /*!40100 COLLATE 'latin1_swedish_ci' */;
+CREATE DATABASE IF NOT EXISTS `product-db` /*!40100 COLLATE 'latin1_swedish_ci' */;
 
 USE `product-db`;
+
+DROP TABLE IF EXISTS `product`;
 
 CREATE TABLE `product` (
 	`Id` INT NOT NULL AUTO_INCREMENT,

@@ -2,8 +2,25 @@ version: '3'
 
 services:
   db:
-    build: ./Db
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: myPass
+    volumes:
+      - data:/var/lib/mysql
+      - ./Db/prepare.sql:/docker-entrypoint-initdb.d/prepare.sql:ro
+    ports:
+      # This maps localhost:3001 to db:3306
+      # container to container will still use port 3306
+      # This way development on the host machine can use localhost instead of container's ip
+      # and a non-standard port in case the host machine has mysql installed.
+      - '3001:3306'
   app:
+    environment:
+      DB_SERVER: db
+      DB_NAME: product-db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: myPass
     build:
       context: .
       dockerfile: Aspnetcoreapp/Dockerfile
@@ -11,3 +28,7 @@ services:
       - 8080:80
     depends_on:
       - db
+volumes:
+  data:
+    driver: local
+    name: db_data
